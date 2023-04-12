@@ -20,6 +20,10 @@ class ReachTarget(Task):
             [DetectedCondition(self.robot.arm.get_tip(), success_sensor)])
 
     def init_episode(self, index: int) -> List[str]:
+        # set robot position
+        j = np.array([-19.98446757,  -5.13051495,  19.61395883, -93.61771465, 1.72630822, 85.01589052, 44.61888011])*np.pi/180
+        self.robot.arm.set_joint_positions(j, disable_dynamics=True)
+        
         color_name, color_rgb = colors[index]
         self.target.set_color(color_rgb)
         color_choices = np.random.choice(
