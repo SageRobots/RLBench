@@ -12,7 +12,10 @@ class ReachTargetBig(Task):
 
     def init_task(self) -> None:
         self.target = Shape('target')
-        self.boundaries = Shape('boundary')
+        self.boundary1 = SpawnBoundary([Shape('boundary1')])
+        self.boundary2 = SpawnBoundary([Shape('boundary2')])
+        self.boundary3 = SpawnBoundary([Shape('boundary3')])
+        self.boundary4 = SpawnBoundary([Shape('boundary4')])
         success_sensor = ProximitySensor('success')
         self.register_success_conditions(
             [DetectedCondition(self.robot.arm.get_tip(), success_sensor)])
@@ -21,23 +24,39 @@ class ReachTargetBig(Task):
         # move robot in plane with boundary
         j = np.array([-19.98446757,  -5.13051495,  19.61395883, -93.61771465, 1.72630822, 85.01589052, 44.61888011])*np.pi/180
         self.robot.arm.set_joint_positions(j, disable_dynamics=True)
-
-        color_name, color_rgb = colors[index]
+        
+        # target cyan
         self.target.set_color(colors[7][1])
-        color_choices = np.random.choice(
-            list(range(index)) + list(range(index + 1, len(colors))),
-            size=2, replace=False)
-        b = SpawnBoundary([self.boundaries])
-        for ob in [self.target]:
-            b.sample(ob, min_distance=0.2,
-                     min_rotation=(0, 0, 0), max_rotation=(0, 0, 0))
 
-        return ['reach the %s target' % color_name,
-                'touch the %s ball with the panda gripper' % color_name,
-                'reach the %s sphere' %color_name]
+        if index == 0:
+            # boundary1
+            b = self.boundary1
+            b.clear()
+            b.sample(self.target, min_distance=0.2,
+                     min_rotation=(0, 0, 0), max_rotation=(0, 0, 0))
+        elif index == 1:
+            # boundary2
+            b = self.boundary2
+            b.clear()
+            b.sample(self.target, min_distance=0.2,
+                     min_rotation=(0, 0, 0), max_rotation=(0, 0, 0))
+        elif index == 2:
+            # boundary3
+            b = self.boundary3
+            b.clear()
+            b.sample(self.target, min_distance=0.2,
+                     min_rotation=(0, 0, 0), max_rotation=(0, 0, 0))
+        elif index == 3:
+            # boundary4
+            b = self.boundary4
+            b.clear()
+            b.sample(self.target, min_distance=0.2,
+                     min_rotation=(0, 0, 0), max_rotation=(0, 0, 0))
+            
+        return ['reach the target']
 
     def variation_count(self) -> int:
-        return 1
+        return 3
 
     def base_rotation_bounds(self) -> Tuple[List[float], List[float]]:
         return [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]

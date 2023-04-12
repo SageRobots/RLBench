@@ -35,11 +35,11 @@ flags.DEFINE_list('image_size', [128, 128],
 flags.DEFINE_enum('renderer',  'opengl3', ['opengl', 'opengl3'],
                   'The renderer to use. opengl does not include shadows, '
                   'but is faster.')
-flags.DEFINE_integer('processes', 10,
+flags.DEFINE_integer('processes', 3,
                      'The number of parallel processes during collection.')
 flags.DEFINE_integer('episodes_per_task', 64,
                      'The number of episodes to collect per task.')
-flags.DEFINE_integer('variations', -1,
+flags.DEFINE_integer('variations', 3,
                      'Number of variations to collect per task. -1 for all.')
 
 
