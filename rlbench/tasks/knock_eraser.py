@@ -22,7 +22,11 @@ class KnockEraser(Task):
 
     def init_episode(self, index: int) -> List[str]:
         # move robot to initial position
-        j = np.array([-19.98446757,  -5.13051495,  19.61395883, -93.61771465, 1.72630822, 85.01589052, 44.61888011])*np.pi/180
+        # use sample ik
+        # j = self.robot.arm.solve_ik_via_sampling([0.25, 0, 1.0], [np.pi, 0, np.pi])[0]
+        # print('j', j)
+        # j = np.array([-19.98446757,  -5.13051495,  19.61395883, -93.61771465, 1.72630822, 85.01589052, 44.61888011])*np.pi/180
+        j = np.array([1.90242633e-01, -1.82561681e-03, -1.74581066e-01, -2.33221745e+00, -1.09314790e-03,  2.26251936e+00,  8.01950991e-01])
         self.robot.arm.set_joint_positions(j, disable_dynamics=True)
 
         # spawn objects in the workspace
